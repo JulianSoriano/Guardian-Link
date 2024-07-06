@@ -49,55 +49,15 @@ require 'header.php';
     <!-- Defines a container div, which is often used to group and style content. -->
         <div class="container">
         <!-- About Section -->
+       
         <section>
             <!-- Title -->
             <h1>Admin</h1>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Et pariatur neque reiciendis similique harum vel! Suscipit vitae possimus quos sequi voluptatum ad id ducimus, consequuntur eaque tempora a quod perspiciatis?</p>
-            <!-- Text -->
-            <h2>Administer Volunteer Permissions</h2>
-            <?php
-
-                //SQL query to select all columns from the "volunteer" table.
-                $sql = "SELECT * FROM volunteer;";
-
-                //Execute the query and store the result.
-                $result = mysqli_query($conn, $sql);
-
-                //Check if there are any rows returned by the query.
-                $resultCheck = mysqli_num_rows($result);
-
-                //If there are rows in the result.
-                if ($resultCheck > 0) { ?>
-
-                <table style="width:100%; border: 1px solid #fff;">
-                    <tr>
-                        <td>Name</td>
-                        <td>Email</td>
-                        <td>Admin</td>
-                    </tr>
-                        <?php
-                            //Fetch each row as an array.
-                            while ($row = mysqli_fetch_assoc($result)) {
-                                $isAdmin = ""; 
-                                if ($row['admin'] === "1") {
-                                    $isAdmin = "Yes"; 
-                                } else {
-                                    $isAdmin = "No"; 
-                                }
-                                //Output the neccessary columns for each row
-                                echo "<tr>" .
-                                    "<td>" . $row['name'] . "</td>" .
-                                    "<td>" . $row['email'] . "</td>" .
-                                    "<td>" . $isAdmin . "</td>" .
-                                    "</tr>";
-                            }
-                        }?>
-                </table>
-
-
+        </section>
+        <section>
                 <h2>Administer NGO Permissions</h2>
             <?php
-
                 //SQL query to select all columns from the "volunteer" table.
                 $sql2 = "SELECT * FROM ngo;";
 
@@ -110,7 +70,9 @@ require 'header.php';
                 //If there are rows in the result.
                 if ($resultCheck2 > 0) { ?>
 
-                <table style="width:100%;">
+            <form action="./admin.php" method="post">
+                <input type="hidden" id="type" name="type" value="ngo">
+                <table style="width:100%; border: 1px solid #fff;">
                     <tr>
                         <td><strong>Name</strong></td>
                         <td><strong>Email</strong></td>
@@ -124,9 +86,13 @@ require 'header.php';
                               
                                 $isAdmin = ""; 
                                 if ($row['admin'] === "1") {
-                                    $isAdmin = "Yes"; 
+                                    $isAdmin = '<input type="radio" name="input__'. $row['idnumber'] .'" value="1" checked />
+    <label >Yes</label><input type="radio" name="input__'. $row['idnumber'] .'" value="0" />
+    <label >No</label>'; 
                                 } else {
-                                    $isAdmin = "No"; 
+                                    $isAdmin = '<input type="radio" name="input__'. $row['idnumber'] .'" value="1"  />
+    <label >Yes</label><input type="radio" name="input__'. $row['idnumber'] .'" value="0" checked />
+    <label >No</label>'; 
                                 }
                                 //Output the neccessary columns for each row
                                 echo "<tr>" .
@@ -137,15 +103,61 @@ require 'header.php';
                             }
                         }?>
                 </table>
+            <input type="submit" value="Update Account">
+            </form>
         </section>
-<!--         
-        <table>
-            <tr>
-                <td>Name</td>
-                <td>Email</td>
-                <td>Admin</td>
-            </tr>
-        </table> -->
+
+
+        <section>
+            <!-- Text -->
+            <h2>Administer Volunteer Permissions</h2>
+            <?php
+
+                //SQL query to select all columns from the "volunteer" table.
+                $sql = "SELECT * FROM volunteer;";
+                //Execute the query and store the result.
+                $result = mysqli_query($conn, $sql);
+
+                //Check if there are any rows returned by the query.
+                $resultCheck = mysqli_num_rows($result);
+
+                //If there are rows in the result.
+                if ($resultCheck > 0) { ?>
+
+                <form action="./admin.php" method="post">
+                <table style="width:100%; border: 1px solid #fff;">
+                    <input type="hidden" id="type" name="type" value="volunteer">
+                    <tr>
+                        <td>Name</td>
+                        <td>Email</td>
+                        <td>Admin</td>
+                    </tr>
+                        <?php
+                            //Fetch each row as an array.
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                $isAdmin = ""; 
+                                if ($row['admin'] === "1") {
+                                    $isAdmin = '<input type="radio" name="input__'. $row['idnumber'] .'" value="1" checked />
+    <label>Yes</label><input type="radio" name="input__'. $row['idnumber'] .'" value="0" />
+    <label>No</label>'; 
+                                } else {
+                                    $isAdmin = '<input type="radio" name="input__'. $row['idnumber'] .'" value="1"  />
+    <label>Yes</label><input type="radio" name="input__'. $row['idnumber'] .'" value="0" checked />
+    <label>No</label>'; 
+                                }
+                                //Output the neccessary columns for each row
+                                echo "<tr>" .
+                                    "<td>" . $row['name'] . "</td>" .
+                                    "<td>" . $row['email'] . "</td>" .
+                                    "<td>" . $isAdmin . "</td>" .
+                                    "</tr>";
+                            }
+                        }?>
+                </table>
+                <input type="submit" value="Update Account">
+                </form>
+        </section>
+
 
     </div>
 
@@ -154,3 +166,47 @@ require 'header.php';
 
 <!-- This document outlines the volunteer members to the NGO User -->
 </html>
+
+
+
+<?php
+
+// Check if the form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    foreach($_POST as $key => $value){
+        $userid = substr($key, 7); 
+        $isCurrentUser = $_SESSION['type'] === $_POST["type"] && $_SESSION['user_id'] == $userid;
+
+        if($isCurrentUser) {     
+            continue;
+        }
+
+
+        if(str_contains($key, 'input__')) {
+            
+            $type = mysqli_real_escape_string($conn, $_POST["type"] ); 
+
+            if($type == "volunteer") {
+                $sql = "UPDATE volunteer SET `admin`= ? WHERE `idnumber` = ?";
+            } elseif ($type == "ngo") {
+                $sql = "UPDATE ngo SET `admin`= ? WHERE `idnumber` = ?";
+            } else {
+                echo "SQL Error";
+            }
+            
+
+            $stmt = mysqli_stmt_init($conn);
+            if (!mysqli_stmt_prepare($stmt, $sql)) {
+                echo "SQL Error";
+            } else {
+                mysqli_stmt_bind_param($stmt, "ss", $value, $userid);
+                mysqli_stmt_execute($stmt);
+            }
+        }
+    }
+
+   echo " <script> window.location.replace('admin.php'); </script>";
+}
+
+?>

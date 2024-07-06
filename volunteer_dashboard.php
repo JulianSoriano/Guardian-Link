@@ -1,3 +1,18 @@
+<?php
+// You'd put this code at the top of any "protected" page you create
+session_start();
+
+if ( isset( $_SESSION['user_id'] ) ) {
+    // Grab user data from the database using the user_id
+    // Let them access the "logged in only" pages
+} else {
+    // Redirect them to the login page
+    header("Location: volunteer_login.php");
+}
+
+
+?>
+
 <!-- Declares the document type and version of HTML being used -->
 <!DOCTYPE html>
 
@@ -12,6 +27,7 @@
 require 'style.php';
 require 'connect.php';
 require 'header.php';
+
 ?>
 
     <!-- Sets the title of the webpage -->

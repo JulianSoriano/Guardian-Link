@@ -9,6 +9,8 @@ if ( isset( $_SESSION['user_id'] ) ) {
     // Redirect them to the login page
     header("Location: ngo_login.php");
 }
+
+
 ?>
 
 
