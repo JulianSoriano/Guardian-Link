@@ -1,3 +1,5 @@
+<!-- volunteer_login.php: Login form for the volunteer user -->
+
 <!-- Opens the HTML document -->
 <html>
 
@@ -18,7 +20,7 @@ require 'header.php';
 
 <body>
     <header>
-        <h1>Volunteer Logink</h1>
+        <h1>Volunteer Login</h1>
     </header>
     
     <div class="container">
@@ -29,10 +31,6 @@ require 'header.php';
                 <input type="submit" value="Login">
             </form>
 
-            <!-- Forgot Password Button -->
-            <div class="callout">
-                <a href="#">Forgot your password?</a>
-            </div>
         </section>
 
     </div>
@@ -40,5 +38,5 @@ require 'header.php';
 <!-- End of Body Section -->
 </body>
 
-<!-- End of the whole document -->
+<!-- End of volunteer_login.php -->
 </html>

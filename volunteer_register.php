@@ -1,3 +1,5 @@
+<!-- volunteer_register.php: This is the registration page for volunteers -->
+
 <!-- Declares the document type and version of HTML being used -->
 <!DOCTYPE html>
 
@@ -66,6 +68,7 @@ require 'header.php';
             <label for="area_of_concern">Area of Expertise:</label>
             <select id="area_of_concern" name="area_of_concern" required>
                 <option value="">Select</option>
+                
                 <!-- Dropdown Options -->
                 <option value="Data Privacy and Protection">Data Privacy and Protection</option>
                 <option value="Phishing and Social Engineering Attacks">Phishing and Social Engineering Attacks</option>
@@ -84,6 +87,7 @@ require 'header.php';
             <label for="criminal_background_check">Have you completed a criminal background check?:</label>
             <select id="criminal_background_check" name="criminal_background_check" required>
                 <option value="">Select</option>
+                
                 <!-- Dropdown Options -->
                 <option value="Yes">Yes</option>
                 <option value="No">No</option>
@@ -116,9 +120,10 @@ require 'header.php';
 
 <?php
 
-// Check if the form is submitted
+// Check if the form is submitted by verifying if the request method is POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Get the form data and make sure to prevent SQL Injection
+    
+    // Get the form data and make sure to prevent SQL Injection by using 'msqli real escape string'
     $full_name = mysqli_real_escape_string($conn, $_POST['name']);
     $phone = mysqli_real_escape_string($conn, $_POST['phone']);
     $email = mysqli_real_escape_string($conn, $_POST['email']);
@@ -128,11 +133,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $area_of_expertise = mysqli_real_escape_string($conn, $_POST['area_of_concern']);
     $criminal_background_check = mysqli_real_escape_string($conn, $_POST['criminal_background_check']);
 
-    // Prepare SQL statement to insert data into the database
+    // Prepare SQL statement to insert data into the Volunteer database
     $sql = "INSERT INTO volunteer (name, phone, email, password, hours, linkedin, expertise, bgcheck) 
             VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
 
     $stmt = mysqli_stmt_init($conn);
+    
+    // Check for errors
     if (!mysqli_stmt_prepare($stmt, $sql)) {
         echo "SQL Error";
     } else {
@@ -140,8 +147,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         //Hash password to scramble when viewed in database
         $hashedPwd = password_hash($password, PASSWORD_DEFAULT);
 
+        //Bind the parameters of the prepared statement
         mysqli_stmt_bind_param($stmt, "ssssssss", $full_name, $phone, $email, $hashedPwd, $hours_per_week, $linkedin_url, $area_of_expertise, $criminal_background_check);
+        
+        //Execute the prepared statement
         mysqli_stmt_execute($stmt);
+        
+        //Success message
         echo "New record created successfully" . "<br>";
     }
 }

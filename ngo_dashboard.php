@@ -1,19 +1,19 @@
+<!--ngo_dashboard.php: The protected part of the site for the NGO user.-->
+
 <?php
-// You'd put this code at the top of any "protected" page you create
+//Start or resume the existing session. You'd put this code at the top of any "protected" page you create
 session_start();
 
+//Grab user data from the database using the user_id and let them access the "logged in only pages.
 if ( isset( $_SESSION['user_id'] ) ) {
-    // Grab user data from the database using the user_id
-    // Let them access the "logged in only" pages
+    
 } else {
+
     // Redirect them to the login page
     header("Location: ngo_login.php");
 }
 
-
 ?>
-
-
 
 <!-- Declares the document type and version of HTML being used -->
 <!DOCTYPE html>
@@ -93,5 +93,5 @@ require 'header.php';
 <!-- End of Body Section -->
 </body>
 
-<!-- This document outlines the volunteer members to the NGO User -->
+<!-- End of ngo_dashboard.php file -->
 </html>

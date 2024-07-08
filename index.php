@@ -1,3 +1,5 @@
+<!-- index.php: This is the home page of the website -->
+
 <!-- Declares the document type and version of HTML being used -->
 <!DOCTYPE html>
 
@@ -75,5 +77,5 @@ require 'header.php';
 <!-- End of Body Section -->
 </body>
 
-<!-- This is the home page of the website. -->
+<!-- End of index.php file -->
 </html>

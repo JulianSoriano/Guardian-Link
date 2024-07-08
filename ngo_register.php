@@ -1,3 +1,5 @@
+<!-- ngo_register.php: This is the registration page for NGOs -->
+
 <!-- Declares the document type and version of HTML being used -->
 <!DOCTYPE html>
 
@@ -15,7 +17,7 @@ require 'header.php';
 ?>
 
     <!-- Sets the title of the webpage -->
-    <title>Guardian Link NGO Registration Form</title>
+    <title>Guardian Link: NGO Registration Form</title>
 
 <!-- Close Head Section -->
 </head>
@@ -26,7 +28,7 @@ require 'header.php';
 <!-- Header Section. Typically contains introductory content or navigation links. -->
 <header>
 
-<h1>NGO Registration Form</h1>
+<h1>Guardian Link: NGO Registration Form</h1>
 
     <!-- Close Header Section. -->
     </header>
@@ -58,6 +60,7 @@ require 'header.php';
             <label for="area_of_concern">Area of Concern:</label>
             <select id="area_of_concern" name="area_of_concern" required>
                 <option value="">Select</option>
+                
                 <!-- Dropdown Options -->
                 <option value="Data Privacy and Protection">Data Privacy and Protection</option>
                 <option value="Phishing and Social Engineering Attacks">Phishing and Social Engineering Attacks</option>
@@ -98,9 +101,10 @@ require 'header.php';
 
 <?php
 
-// Check if the form is submitted
+// Check if the form is submitted by verifying if the request method is POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Get the form data and make sure to prevent SQL Injection
+    
+    // Get the form data and make sure to prevent SQL Injection by using 'msqli real escape string'
     $name = mysqli_real_escape_string($conn, $_POST['name']);
     $phone = mysqli_real_escape_string($conn, $_POST['phone']);
     $email = mysqli_real_escape_string($conn, $_POST['email']);
@@ -108,11 +112,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $area_of_concern = mysqli_real_escape_string($conn, $_POST['area_of_concern']);
     
 
-    // Prepare SQL statement to insert data into the database
+    // Prepare SQL statement to insert data into the NGO database
     $sql = "INSERT INTO ngo (organization, phone, email, password, concern) 
             VALUES (?, ?, ?, ?, ?);";
 
     $stmt = mysqli_stmt_init($conn);
+    
+    // Check for errors
     if (!mysqli_stmt_prepare($stmt, $sql)) {
         echo "SQL Error";
     } else {
@@ -120,8 +126,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         //Hash password to scramble when viewed in database
         $hashedPwd = password_hash($password, PASSWORD_DEFAULT);
 
+        //Bind the parameters of the prepared statement
         mysqli_stmt_bind_param($stmt, "sssss", $name, $phone, $email, $hashedPwd, $area_of_concern);
+        
+        //Execute the prepared statement
         mysqli_stmt_execute($stmt);
+        
+        //Success message
         echo "New record created successfully" . "<br>";
     }
 }
@@ -131,5 +142,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <!-- End of Body Section -->
 </body>
 
-<!-- This is the registration page for NGOs -->
 </html>
+<!-- End of ngo_register file -->

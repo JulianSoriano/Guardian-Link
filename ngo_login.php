@@ -1,3 +1,5 @@
+<!-- ngo_login.php: Login form for the NGO user -->
+
 <!-- Opens the HTML document -->
 <html>
 
@@ -11,7 +13,8 @@ require 'connect.php';
 require 'header.php';
 ?>
 
-    <title>Login - Guardian Link</title>
+    <!-- Sets the title of the webpage -->
+    <title>Guardian Link NGO Login</title>
 
 </head>
 
@@ -28,14 +31,12 @@ require 'header.php';
                 <input type="submit" value="Login">
             </form>
 
-            <!-- Forgot Password Button -->
-            <div class="callout">
-                <a href="#">Forgot your password?</a>
-            </div>
         </section>
 
     </div>
+
+<!-- End of Body Section -->
 </body>
 
-<!-- End of the whole document -->
+<!-- End of ngo_login.php file -->
 </html>

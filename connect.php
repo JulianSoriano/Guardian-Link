@@ -1,4 +1,5 @@
 <?php
+//connect.php: The point of this file is to establish the connection to the database.
 
 //This is the name of the Server.
 $dbServername = "localhost";
@@ -19,5 +20,4 @@ $conn = mysqli_connect($dbServername, $dbUsername, $dbPassword, $dbName);
 if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
-
-//The point of this file is to establish the connection to the database.
+//End of connect.php file
