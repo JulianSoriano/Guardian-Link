@@ -54,6 +54,7 @@ require 'header.php';
             <!-- Title -->
             <h1>Welcome to the Admin page.</h1>
             <p>As an admin you have the ability to let other users become admins as well by using the yes or no buttons in the list below. </p>
+            <p>Delete User accounts by entering the user ID in the form below.</p>
         </section>
 
         <!-- NGO Admin Table -->
@@ -79,6 +80,7 @@ require 'header.php';
                     
                     <!-- NGO Table header -->
                     <tr>
+                        <td><strong>User ID</strong></td>
                         <td><strong>Name</strong></td>
                         <td><strong>Email</strong></td>
                         <td><strong>Admin</strong></td>
@@ -101,7 +103,8 @@ require 'header.php';
                                     <label >No</label>'; 
                                 }
                                 //Output the neccessary columns for each row
-                                echo "<tr>" .
+                                echo "<tr>" . 
+                                    "<td >" . $row['idnumber'] . "</td>" .
                                     "<td >" . $row['organization'] . "</td>" .
                                     "<td>" . $row['email'] . "</td>" .
                                     "<td>" . $isAdmin. "</td>" .
@@ -111,6 +114,17 @@ require 'header.php';
                 </table>
             <input type="submit" value="Update Account">
             </form>
+        </section>
+
+        <!-- Delete NGO account Section -->
+        <section>
+            <h2>Delete NGO Accounts</h2>
+                <form action="./admin.php" method="post">
+                    <input type="hidden" name="type" value="delete_ngo">
+                    <label for="userid_delete">User ID:</label>
+                    <input type="text" id="userid_delete" name="userid_delete" required>
+                    <input type="submit" value="Delete Account" onclick="return confirm('Are you sure you want to delete this account?');">
+                </form>
         </section>
 
         <!-- Volunteer Admin Table -->
@@ -137,6 +151,8 @@ require 'header.php';
                     
                     <!-- Volunteer table header -->
                     <tr>
+                        
+                        <td>User ID</td>
                         <td>Name</td>
                         <td>Email</td>
                         <td>Admin</td>
@@ -157,6 +173,7 @@ require 'header.php';
                                 }
                                 //Output the neccessary columns for each row
                                 echo "<tr>" .
+                                    "<td>" . $row['idnumber'] . "</td>" .
                                     "<td>" . $row['name'] . "</td>" .
                                     "<td>" . $row['email'] . "</td>" .
                                     "<td>" . $isAdmin . "</td>" .
@@ -165,6 +182,17 @@ require 'header.php';
                         }?>
                 </table>
                 <input type="submit" value="Update Account">
+                </form>
+        </section>
+
+        <!-- Delete Volunteer account Section ???-->
+        <section>
+            <h2>Delete Volunteer Accounts</h2>
+                <form action="./admin.php" method="post">
+                    <input type="hidden" name="type" value="delete_volunteer">
+                    <label for="userid_delete">User ID:</label>
+                    <input type="text" id="userid_delete" name="userid_delete" required>
+                    <input type="submit" value="Delete Account" onclick="return confirm('Are you sure you want to delete this account?');">
                 </form>
         </section>
 
@@ -182,48 +210,90 @@ require 'header.php';
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    foreach($_POST as $key => $value){
+    // Delete NGO account form 
+    if ($_POST["type"] === "delete_ngo") {
+
+        // Extract user ID to delete from the form input
+        $userid_delete = mysqli_real_escape_string($conn, $_POST["userid_delete"]);
         
-        //Extract the user ID from the input name.
-        $userid = substr($key, 7); 
-        $isCurrentUser = $_SESSION['type'] === $_POST["type"] && $_SESSION['user_id'] == $userid;
-
-        //Skip updating the current user's own admin status.
-        if($isCurrentUser) {     
-            continue;
+        // SQL query to delete the user account from the 'ngo' table
+        $sql_delete = "DELETE FROM ngo WHERE idnumber = ?";
+        $stmt_delete = mysqli_stmt_init($conn);
+    
+        // Initialize prepared statement
+        if (!mysqli_stmt_prepare($stmt_delete, $sql_delete)) {
+            echo "SQL Error: " . mysqli_stmt_error($stmt_delete);
+        } else {
+            // Bind parameters and execute the deletion query
+            mysqli_stmt_bind_param($stmt_delete, "s", $userid_delete);
+            mysqli_stmt_execute($stmt_delete);
+            echo "Account deleted successfully.";
         }
+    } 
+    
+    // Delete Volunteer account form 
+    if ($_POST["type"] === "delete_volunteer") {
 
-        //Check if the key contains 'input__', indicating it as a radio button input.
-        if(str_contains($key, 'input__')) {
-            
-            //Sanitize the input.
-            $type = mysqli_real_escape_string($conn, $_POST["type"] ); 
-
-            //Prepare the SQL query based on the user type.
-            if($type == "volunteer") {
-                $sql = "UPDATE volunteer SET `admin`= ? WHERE `idnumber` = ?";
-            } elseif ($type == "ngo") {
-                $sql = "UPDATE ngo SET `admin`= ? WHERE `idnumber` = ?";
-            } else {
-                echo "SQL Error";
-            }
-            
-
-            //Initialize and prepare the statement.
-            $stmt = mysqli_stmt_init($conn);
-            if (!mysqli_stmt_prepare($stmt, $sql)) {
-                echo "SQL Error";
-            } else {
-                //Bind parameters and execute the statement.
-                mysqli_stmt_bind_param($stmt, "ss", $value, $userid);
-                mysqli_stmt_execute($stmt);
-            }
+        // Extract user ID to delete from the form input
+        $userid_delete = mysqli_real_escape_string($conn, $_POST["userid_delete"]);
+        
+        // SQL query to delete the user account from the 'volunteer' table
+        $sql_delete = "DELETE FROM volunteer WHERE idnumber = ?";
+        $stmt_delete = mysqli_stmt_init($conn);
+    
+        // Initialize prepared statement
+        if (!mysqli_stmt_prepare($stmt_delete, $sql_delete)) {
+            echo "SQL Error: " . mysqli_stmt_error($stmt_delete);
+        } else {
+            // Bind parameters and execute the deletion query
+            mysqli_stmt_bind_param($stmt_delete, "s", $userid_delete);
+            mysqli_stmt_execute($stmt_delete);
+            echo "Account deleted successfully.";
         }
     }
+        
+    
+        foreach($_POST as $key => $value){
+            
+            //Extract the user ID from the input name
+            $userid = substr($key, 7); 
+            $isCurrentUser = $_SESSION['type'] === $_POST["type"] && $_SESSION['user_id'] == $userid;
 
-   //Redirect to the admin page after processing to update result.
-    echo " <script> window.location.replace('admin.php'); </script>";
-}
+            //Skip updating the current user's own admin status.
+            if($isCurrentUser) {     
+                continue;
+            }
 
-?>
+            //Check if the key contains 'input__', indicating it as a radio button input.
+            if(str_contains($key, 'input__')) {
+                
+                //Sanitize the input.
+                $type = mysqli_real_escape_string($conn, $_POST["type"] ); 
+
+                //Prepare the SQL query based on the user type.
+                if($type == "volunteer") {
+                    $sql = "UPDATE volunteer SET `admin`= ? WHERE `idnumber` = ?";
+                } elseif ($type == "ngo") {
+                    $sql = "UPDATE ngo SET `admin`= ? WHERE `idnumber` = ?";
+                } else {
+                    echo "SQL Error";
+                }
+                
+
+                //Initialize and prepare the statement.
+                $stmt = mysqli_stmt_init($conn);
+                if (!mysqli_stmt_prepare($stmt, $sql)) {
+                    echo "SQL Error";
+                } else {
+                    //Bind parameters and execute the statement.
+                    mysqli_stmt_bind_param($stmt, "ss", $value, $userid);
+                    mysqli_stmt_execute($stmt);
+                }
+            }
+        }
+    //Redirect to the admin page after processing to update result.
+        echo " <script> window.location.replace('admin.php'); </script>";
+    }
+
+    ?>
 <!-- End of admin.php file -->

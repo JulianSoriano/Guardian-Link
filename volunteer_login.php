@@ -31,6 +31,9 @@ require 'header.php';
                 <input type="submit" value="Login">
             </form>
 
+            <div class="callout">
+                <a href="./reset_password.php">Forgot your password?</a>
+            </div>
         </section>
 
     </div>
