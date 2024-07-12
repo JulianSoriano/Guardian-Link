@@ -131,7 +131,8 @@ require 'header.php';
         <!-- NGO Account Creation Form -->    
     <section>
         <h1>New NGO Registration Form</h1>
-        <form action="#" method="post">
+        <form action="./admin.php" method="post">
+            <input type="hidden" name="type" value="create_ngo">
             <label for="name">Organization Name:</label>
             <input type="text" id="name" name="name" required><br>
             <br>
@@ -196,7 +197,6 @@ require 'header.php';
                     
                     <!-- Volunteer table header -->
                     <tr>
-                        
                         <td>User ID</td>
                         <td>Name</td>
                         <td>Email</td>
@@ -360,6 +360,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo "Account deleted successfully.";
         }
     }
+
+    If ($_POST["type"] === "create_ngo") {
+
+        // Get the form data and make sure to prevent SQL Injection by using 'msqli real escape string'
+        $name = mysqli_real_escape_string($conn, $_POST['name']);
+        $phone = mysqli_real_escape_string($conn, $_POST['phone']);
+        $email = mysqli_real_escape_string($conn, $_POST['email']);
+        $password = mysqli_real_escape_string($conn, $_POST['password']);
+        $area_of_concern = mysqli_real_escape_string($conn, $_POST['area_of_concern']);
+    
+
+        // Prepare SQL statement to insert data into the NGO database
+        $sql = "INSERT INTO ngo (organization, phone, email, password, concern) 
+                VALUES (?, ?, ?, ?, ?);";
+
+        $stmt = mysqli_stmt_init($conn);
+    
+        // Check for errors
+        if (!mysqli_stmt_prepare($stmt, $sql)) {
+            echo "SQL Error";
+        } else {
+
+            //Hash password to scramble when viewed in database
+            $hashedPwd = password_hash($password, PASSWORD_DEFAULT);
+
+            //Bind the parameters of the prepared statement
+            mysqli_stmt_bind_param($stmt, "sssss", $name, $phone, $email, $hashedPwd, $area_of_concern);
+        
+            //Execute the prepared statement
+            mysqli_stmt_execute($stmt);
+        
+            //Success message
+            echo "New record created successfully" . "<br>";
+    }
+}
         
         //Admin Toggle PHP Code
         foreach($_POST as $key => $value){
