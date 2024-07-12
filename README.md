@@ -40,7 +40,7 @@ Forgot Password
 Admin Privileges
     Admin has authority to delete users and assign admin roles (COMPLETE)
     Admin can reset passwords
-    Admin can create basic user profiles
+    Admin can create basic user profiles (COMPLETE)
     Regular users have the ability to delete their own accounts.
 
 Submission Checklist

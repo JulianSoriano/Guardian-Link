@@ -245,7 +245,8 @@ require 'header.php';
     <!-- New Volunteer Registration Form -->    
     <section>
         <h1>Volunteer Registration Form</h1>
-        <form action="#" method="post">
+        <form action="./admin.php" method="post">
+            <input type="hidden" name="type" value="create_volunteer">
             <label for="name">Full Name:</label>
             <input type="text" id="name" name="name" required><br>
             <br>
@@ -361,6 +362,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
+    // Create NGO account form
     If ($_POST["type"] === "create_ngo") {
 
         // Get the form data and make sure to prevent SQL Injection by using 'msqli real escape string'
@@ -380,7 +382,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Check for errors
         if (!mysqli_stmt_prepare($stmt, $sql)) {
             echo "SQL Error";
-        } else {
+            } else {
 
             //Hash password to scramble when viewed in database
             $hashedPwd = password_hash($password, PASSWORD_DEFAULT);
@@ -393,8 +395,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
             //Success message
             echo "New record created successfully" . "<br>";
+        }    
     }
-}
+
+    // Create NGO account form
+    If ($_POST["type"] === "create_volunteer") {
+
+        // Get the form data and make sure to prevent SQL Injection by using 'msqli real escape string'
+        $full_name = mysqli_real_escape_string($conn, $_POST['name']);
+        $phone = mysqli_real_escape_string($conn, $_POST['phone']);
+        $email = mysqli_real_escape_string($conn, $_POST['email']);
+        $password = mysqli_real_escape_string($conn, $_POST['password']);
+        $hours_per_week = mysqli_real_escape_string($conn, $_POST['hours']);
+        $linkedin_url = mysqli_real_escape_string($conn, $_POST['linkedin']);
+        $area_of_expertise = mysqli_real_escape_string($conn, $_POST['area_of_concern']);
+        $criminal_background_check = mysqli_real_escape_string($conn, $_POST['criminal_background_check']);
+
+        // Prepare SQL statement to insert data into the Volunteer database
+        $sql = "INSERT INTO volunteer (name, phone, email, password, hours, linkedin, expertise, bgcheck) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+
+        $stmt = mysqli_stmt_init($conn);
+    
+        // Check for errors
+        if (!mysqli_stmt_prepare($stmt, $sql)) {
+            echo "SQL Error";
+        } else {
+
+            //Hash password to scramble when viewed in database
+            $hashedPwd = password_hash($password, PASSWORD_DEFAULT);
+
+            //Bind the parameters of the prepared statement
+            mysqli_stmt_bind_param($stmt, "ssssssss", $full_name, $phone, $email, $hashedPwd, $hours_per_week, $linkedin_url, $area_of_expertise, $criminal_background_check);
+            
+            //Execute the prepared statement
+            mysqli_stmt_execute($stmt);
+            
+            //Success message
+            echo "New record created successfully" . "<br>";
+        }
+    }
         
         //Admin Toggle PHP Code
         foreach($_POST as $key => $value){
@@ -435,9 +475,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 }
             }
         }
-    //Redirect to the admin page after processing to update result.
+    
+        //Redirect to the admin page after processing to update result.
         echo " <script> window.location.replace('admin.php'); </script>";
     }
-
+    
     ?>
 <!-- End of admin.php file -->
