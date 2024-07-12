@@ -8,8 +8,8 @@ session_start();
 if ( isset( $_SESSION['user_id'] ) ) {
     
 } else {
-    // Redirect them to the login page if not logged in.
-    header("Location: ngo_login.php");
+    // Redirect them to the home page if not logged in.
+    header("Location: index.php");
 }
 
 ?>
@@ -128,7 +128,49 @@ require 'header.php';
                 </form>
         </section>
 
-        <!-- Update NGO account email Section -->
+        <!-- NGO Account Creation Form -->    
+    <section>
+        <h1>New NGO Registration Form</h1>
+        <form action="#" method="post">
+            <label for="name">Organization Name:</label>
+            <input type="text" id="name" name="name" required><br>
+            <br>
+
+            <label for="phone">Phone Number:</label>
+            <input type="text" id="phone" name="phone" required><br>
+            <br>
+
+            <label for="email">POC Email:</label>
+            <input type="email" id="email" name="email" required><br>
+            <br>
+
+            <label for="password">Create Password:</label>
+            <input type="password" id="password" name="password" required><br>
+            <br>
+
+            <!-- Area of Concern Dropdown Menu-->
+            <label for="area_of_concern">Area of Concern:</label>
+            <select id="area_of_concern" name="area_of_concern" required>
+                <option value="">Select</option>
+                
+                <!-- Dropdown Options -->
+                <option value="Data Privacy and Protection">Data Privacy and Protection</option>
+                <option value="Phishing and Social Engineering Attacks">Phishing and Social Engineering Attacks</option>
+                <option value="Financial Fraud and Theft">Financial Fraud and Theft</option>
+                <option value="Website Security">Website Security</option>
+                <option value="Network Security">Network Security</option>
+                <option value="Mobile Device Security">Mobile Device Security</option>
+                <option value="Compliance and Regulatory Requirements">Compliance and Regulatory Requirements</option>
+                <option value="Staff Training and Awareness">Staff Training and Awareness</option>
+                <option value="Supply Chain Security">Supply Chain Security</option>
+                <option value="Incident Response and Recovery">Incident Response and Recovery</option>
+            </select><br>
+
+            <!-- Submit Button -->
+            <br>
+            <input type="submit" value="Create Your Account">
+        </form>
+    </section>
 
         <!-- Volunteer Admin Table -->
         <section>
@@ -200,6 +242,69 @@ require 'header.php';
                 </form>
         </section>
 
+    <!-- New Volunteer Registration Form -->    
+    <section>
+        <h1>Volunteer Registration Form</h1>
+        <form action="#" method="post">
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" name="name" required><br>
+            <br>
+
+            <label for="phone">Phone Number:</label>
+            <input type="text" id="phone" name="phone" required><br>
+            <br>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required><br>
+            <br>
+
+            <label for="password">Create Password:</label>
+            <input type="password" id="password" name="password" required><br>
+            <br>
+
+            <label for="hours">Hours available per week:</label>
+            <input type="text" id="hours" name="hours" required><br>
+            <br>
+
+            <label for="linkedin">Linkedin profile URL:</label>
+            <input type="text" id="linkedin" name="linkedin" required><br>
+            <br>
+
+            <!-- Area of Expertise Dropdown Menu-->
+            <label for="area_of_concern">Area of Expertise:</label>
+            <select id="area_of_concern" name="area_of_concern" required>
+                <option value="">Select</option>
+                
+                <!-- Dropdown Options -->
+                <option value="Data Privacy and Protection">Data Privacy and Protection</option>
+                <option value="Phishing and Social Engineering Attacks">Phishing and Social Engineering Attacks</option>
+                <option value="Financial Fraud and Theft">Financial Fraud and Theft</option>
+                <option value="Website Security">Website Security</option>
+                <option value="Network Security">Network Security</option>
+                <option value="Mobile Device Security">Mobile Device Security</option>
+                <option value="Compliance and Regulatory Requirements">Compliance and Regulatory Requirements</option>
+                <option value="Staff Training and Awareness">Staff Training and Awareness</option>
+                <option value="Supply Chain Security">Supply Chain Security</option>
+                <option value="Incident Response and Recovery">Incident Response and Recovery</option>
+            </select><br>
+            <br>
+
+            <!-- Criminal Background Check Dropdown Menu-->
+            <label for="criminal_background_check">Have you completed a criminal background check?:</label>
+            <select id="criminal_background_check" name="criminal_background_check" required>
+                <option value="">Select</option>
+                
+                <!-- Dropdown Options -->
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select><br>
+            <br>
+
+            <!-- Submit Button -->
+            <input type="submit" value="Create your account">
+        </form>
+    </section>
+
 
     </div>
 
@@ -256,7 +361,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
         
-    
+        //Admin Toggle PHP Code
         foreach($_POST as $key => $value){
             
             //Extract the user ID from the input name
