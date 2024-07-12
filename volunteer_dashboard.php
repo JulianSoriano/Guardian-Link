@@ -29,7 +29,6 @@ if ( isset( $_SESSION['user_id'] ) ) {
 require 'style.php';
 require 'connect.php';
 require 'header.php';
-
 ?>
 
     <!-- Sets the title of the webpage -->

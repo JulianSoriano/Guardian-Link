@@ -43,7 +43,7 @@ require 'header.php';
 <!-- Header Section. Typically contains introductory content or navigation links. -->
 <header>
         <h1>Guardian Link NGO Dashboard</h1>
-
+    
     <!-- Close Header Section. -->
     </header>
 

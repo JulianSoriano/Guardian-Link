@@ -119,6 +119,7 @@ require 'header.php';
         <!-- Delete NGO account Section -->
         <section>
             <h2>Delete NGO Accounts</h2>
+            <p>Enter the User ID of the NGO account to be deleted. This cannot be undone.</p>
                 <form action="./admin.php" method="post">
                     <input type="hidden" name="type" value="delete_ngo">
                     <label for="userid_delete">User ID:</label>
@@ -126,6 +127,8 @@ require 'header.php';
                     <input type="submit" value="Delete Account" onclick="return confirm('Are you sure you want to delete this account?');">
                 </form>
         </section>
+
+        <!-- Update NGO account email Section -->
 
         <!-- Volunteer Admin Table -->
         <section>
@@ -185,9 +188,10 @@ require 'header.php';
                 </form>
         </section>
 
-        <!-- Delete Volunteer account Section ???-->
+        <!-- Delete Volunteer account Section -->
         <section>
             <h2>Delete Volunteer Accounts</h2>
+            <p>Enter the User ID of the Volunteer account to be deleted. This cannot be undone.</p>
                 <form action="./admin.php" method="post">
                     <input type="hidden" name="type" value="delete_volunteer">
                     <label for="userid_delete">User ID:</label>

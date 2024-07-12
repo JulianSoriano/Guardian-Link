@@ -8,25 +8,25 @@
             <ul>
                 
                 <!--Home button-->
-                <li><a href="index.php">Home</a></li>
+                <a href="index.php">Home</a>
 
                 <!--If logged in, have a logout button-->
                 <?php if ( isset( $_SESSION['user_id'] ) ) { ?>
-                <li><a href="logout.php">Logout</a></li>
+                <a href="logout.php">Logout</a>
                 <?php } ?>
 
                 <!--If logged in as a volunteer, have a link to the volunteer dashboard-->
                 <?php if ( isset( $_SESSION['type'] ) && $_SESSION['type'] === "volunteer"  ) { ?>
-                    <li><a href="volunteer_dashboard.php">Volunteer Dashboard</a></li>
+                    <a href="volunteer_dashboard.php">Volunteer Dashboard</a>
                 
                 <!--Else if logged in as an NGO, have a link to the NGO dashboard-->
                 <?php } elseif( isset( $_SESSION['type'] ) && $_SESSION['type'] === "ngo"  ) {  ?>
-                <li><a href="ngo_dashboard.php">NGO Dashboard</a></li>
+                <a href="ngo_dashboard.php">NGO Dashboard</a>
                 <?php }  ?>
 
                 <!--If user is an admin, have a link to the Admin Tools-->
                 <?php if ( isset($_SESSION['admin']) && $_SESSION['admin'] === 1 ) { ?>
-                <li><a href="admin.php">Admin Tools</a></li>
+                <a href="admin.php">Admin Tools</a>
                 <?php } ?>
             
             <!--End of unodered list-->    

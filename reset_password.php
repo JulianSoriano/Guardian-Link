@@ -1,4 +1,4 @@
-<!-- index.php: This is the home page of the website -->
+<!-- reset_password.php: Password reset page -->
 
 <!-- Declares the document type and version of HTML being used -->
 <!DOCTYPE html>
@@ -38,12 +38,10 @@ require 'header.php';
         <section>
             <!-- Title -->
             <h1>So you forgot your password...</h1>
-            <form method="POST" action="">
+            <form method="POST" action="send_email.php">
             <input type="email" name="email" placeholder="Enter your email" required>
             <input type="submit" name="request_reset" value="Request Reset">
             </form>
-            <p>Good luck.</p>
-            <!-- Text -->
             
         </section>
 
