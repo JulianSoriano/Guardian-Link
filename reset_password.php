@@ -40,7 +40,7 @@ require 'header.php';
             <h1>So you forgot your password...</h1>
             <form method="POST" action="send_email.php">
             <input type="email" name="email" placeholder="Enter your email" required>
-            <input type="submit" name="request_reset" value="Request Reset">
+            <input type="submit" name="request_reset" value="Request Reset" onclick="return confirm('An admin will contact you shortly.');">
             </form>
             
         </section>
