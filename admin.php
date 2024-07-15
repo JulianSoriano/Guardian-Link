@@ -80,7 +80,6 @@ require 'header.php';
                         <td><strong>User ID</strong></td>
                         <td><strong>Name</strong></td>
                         <td><strong>Email</strong></td>
-                        <td><strong>Password</strong></td>
                         <td><strong>Admin</strong></td>
                     </tr>
                         <?php
@@ -103,7 +102,6 @@ require 'header.php';
                                     "<td >" . $row['idnumber'] . "</td>" .
                                     "<td >" . $row['organization'] . "</td>" .
                                     "<td>" . $row['email'] . "</td>" .
-                                    "<td>" . $row['password'] . "</td>" .
                                     "<td>" . $isAdmin. "</td>" .
                                     "</tr>";
                             }
@@ -215,7 +213,6 @@ require 'header.php';
                         <td>User ID</td>
                         <td>Name</td>
                         <td>Email</td>
-                        <td>Password</td>
                         <td>Admin</td>
                     </tr>
                         
@@ -237,7 +234,6 @@ require 'header.php';
                                     "<td>" . $row['idnumber'] . "</td>" .
                                     "<td>" . $row['name'] . "</td>" .
                                     "<td>" . $row['email'] . "</td>" .
-                                    "<td>" . $row['password'] . "</td>" .
                                     "<td>" . $isAdmin . "</td>" .
                                     "</tr>";
                             }
@@ -360,6 +356,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // SQL query to update password from NGO table where user ID matches
         $sql_update = "UPDATE ngo SET password = ? WHERE idnumber = ?";
+        $stmt_update = mysqli_stmt_init($conn);
+
+        // Initialize prepared statement
+        if (!mysqli_stmt_prepare($stmt_update, $sql_update)) {
+            echo "SQL Error: " . mysqli_stmt_error($stmt_update);
+        } else {
+            //Hash password to scramble when viewed in database
+            $hashedPwd = password_hash($new_password, PASSWORD_DEFAULT);
+
+            // Bind parameters and excute the update query
+            mysqli_stmt_bind_param($stmt_update, "ss", $hashedPwd, $userid_update);
+            mysqli_stmt_execute($stmt_update);
+            echo "Account password updated successfully.";
+        }
+    }
+
+    //Update Volunteer account form
+    if ($_POST['type'] == 'update_volunteer') {
+        // Extract user ID and password to update from the form input
+        $userid_update = mysqli_real_escape_string($conn, $_POST["userid_update"]);
+        $new_password = mysqli_real_escape_string($conn, $_POST['password_update']);
+
+        // SQL query to update password from Volunteer table where user ID matches
+        $sql_update = "UPDATE volunteer SET password = ? WHERE idnumber = ?";
         $stmt_update = mysqli_stmt_init($conn);
 
         // Initialize prepared statement

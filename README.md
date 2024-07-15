@@ -4,32 +4,16 @@ Julian's Guardian Link Assignment
 
 Functionality Checklist
 
-About Section (COMPLETE)
-    Who we are (COMPLETE)
-    What we do (COMPLETE)
-    Why we do it (COMPLETE)
-    Partnerships (COMPLETE)
+COMPLETED
 
-NGO Registration (COMPLETE)
-    Email (COMPLETE)
-    Organization Name (COMPLETE)
-    Area of Concern (COMPLETE)
+About Section (Who we are, What we do, Why we do it, Partnerships)
+NGO Registration (Email, Organization name, Area of Concern)
+Volunteer Registration (Name, Email, # of Hours worked, Background Check, Linkedin Page)
+3 User Types (NGO, Volunteer, Admin)
+Access Control (Users log in to view opposite user type profiles, and cannot see users of same type)
+Admin Privileges (Admin ability to create and delete users, assign admin roles, reset passwords)
 
-Volunteer Registration (COMPLETE)
-    Name (COMPLETE)
-    Email (COMPLETE)
-    Number of Hours worked (COMPLETE)
-    Criminal Background Check (COMPLETE)
-    Linkedin Page (COMPLETE)
-
-3 User Types (COMPLETE)
-    NGO (COMPLETE)
-    Volunteer (COMPLETE)
-    Admin (COMPLETE)
-
-Access Control (COMPLETE)
-    Users must log in to view opposite user type profiles (COMPLETE)
-    Users cannot see other users of same type (COMPLETE)
+NOT COMPLETED
 
 Communication
     Communication between NGO and Volunteers
@@ -38,9 +22,6 @@ Forgot Password
     Function for users to reset passwords
 
 Admin Privileges
-    Admin has authority to delete users and assign admin roles (COMPLETE)
-    Admin can reset passwords
-    Admin can create basic user profiles (COMPLETE)
     Regular users have the ability to delete their own accounts.
 
 Submission Checklist
