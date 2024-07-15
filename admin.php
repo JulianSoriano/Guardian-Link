@@ -114,6 +114,8 @@ require 'header.php';
                             }
                         }?>
                 </table>
+            
+            <!-- Submit Button -->
             <input type="submit" value="Update Account">
             </form>
         </section>
@@ -126,7 +128,29 @@ require 'header.php';
                     <input type="hidden" name="type" value="delete_ngo">
                     <label for="userid_delete">User ID:</label>
                     <input type="text" id="userid_delete" name="userid_delete" required>
+
+                    <!-- Submit Button -->
                     <input type="submit" value="Delete Account" onclick="return confirm('Are you sure you want to delete this account?');">
+                </form>
+        </section>
+
+        <!-- Update NGO Password Section -->
+        <section>
+            <h2>Update NGO Password Section</h2>
+            <p>Enter the User ID of the NGO account to be deleted. This cannot be undone.</p>
+                <form action="./admin.php" method="post">
+                    <input type="hidden" name="type" value="update_ngo">
+                    
+                    <label for="userid_update">User ID:</label>
+                    <input type="text" id="userid_update" name="userid_update" required><br>
+                    </br>
+
+                    <label for="password_update">Enter new Password:</label>
+                    <input type="password" id="password_update" name="password_update" required><br>
+                    </br>
+
+                    <!-- Submit Button -->
+                    <input type="submit" value="Update Account" onclick="return confirm('Are you sure you want to update this account password?');">
                 </form>
         </section>
 
@@ -232,6 +256,8 @@ require 'header.php';
                             }
                         }?>
                 </table>
+                
+                <!-- Submit Button -->
                 <input type="submit" value="Update Account">
                 </form>
         </section>
@@ -244,7 +270,28 @@ require 'header.php';
                     <input type="hidden" name="type" value="delete_volunteer">
                     <label for="userid_delete">User ID:</label>
                     <input type="text" id="userid_delete" name="userid_delete" required>
+
+                    <!-- Submit Button -->
                     <input type="submit" value="Delete Account" onclick="return confirm('Are you sure you want to delete this account?');">
+                </form>
+        </section>
+
+        <!-- Update Volunteer Password Section -->
+        <section>
+            <h2>Update Volunteer Password Section</h2>
+            <p>Enter the User ID of the Volunteer account to be deleted. This cannot be undone.</p>
+                <form action="./admin.php" method="post">
+                    <input type="hidden" name="type" value="update_volunteer">
+                    <label for="userid_update">User ID:</label>
+                    <input type="text" id="userid_update" name="userid_update" required><br>
+                    </br>
+
+                    <label for="password_update">Enter new Password:</label>
+                    <input type="password" id="password_update" name="password_update" required><br>
+                    </br>
+
+                    <!-- Submit Button -->
+                    <input type="submit" value="Update Account" onclick="return confirm('Are you sure you want to update this account password?');">
                 </form>
         </section>
 
@@ -405,7 +452,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }    
     }
 
-    // Create NGO account form
+    // Create Volunteer account form
     If ($_POST["type"] === "create_volunteer") {
 
         // Get the form data and make sure to prevent SQL Injection by using 'msqli real escape string'
