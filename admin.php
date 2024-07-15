@@ -11,7 +11,6 @@ if ( isset( $_SESSION['user_id'] ) ) {
     // Redirect them to the home page if not logged in.
     header("Location: index.php");
 }
-
 ?>
 
 <!-- Declares the document type and version of HTML being used -->
@@ -29,10 +28,9 @@ require 'style.php';
 require 'connect.php';
 require 'header.php';
 ?>
-
+    
     <!-- Sets the title of the webpage -->
     <title>Guardian Link Admin Page</title>
-
 <!-- Close Head Section -->
 </head>
 
@@ -41,6 +39,7 @@ require 'header.php';
 
 <!-- Header Section. Typically contains introductory content or navigation links. -->
 <header>
+
         <h1>Guardian Link Admin Page</h1>
 
     <!-- Close Header Section. -->
@@ -60,16 +59,14 @@ require 'header.php';
         <section>
                 <h2>Administer NGO Permissions</h2>
                 <p> Toggle NGO Admin privilages here.</p>
+            
             <?php
                 //SQL query to select all columns from the "ngo" table.
                 $sql2 = "SELECT * FROM ngo;";
-
                 //Execute the query and store the result.
                 $result2 = mysqli_query($conn, $sql2);
-
                 //Check if there are any rows returned by the query.
                 $resultCheck2 = mysqli_num_rows($result2);
-
                 //If there are rows in the result.
                 if ($resultCheck2 > 0) { 
             ?>
@@ -86,12 +83,10 @@ require 'header.php';
                         <td><strong>Password</strong></td>
                         <td><strong>Admin</strong></td>
                     </tr>
-
                         <?php
                      
                             //Fetch each row as an array.
                             while ($row = mysqli_fetch_assoc($result2)) {
-
                               
                                 $isAdmin = ""; 
                                 if ($row['admin'] === "1") {
@@ -114,7 +109,7 @@ require 'header.php';
                             }
                         }?>
                 </table>
-            
+
             <!-- Submit Button -->
             <input type="submit" value="Update Account">
             </form>
@@ -140,7 +135,7 @@ require 'header.php';
             <p>Enter the User ID of the NGO account to be deleted. This cannot be undone.</p>
                 <form action="./admin.php" method="post">
                     <input type="hidden" name="type" value="update_ngo">
-                    
+
                     <label for="userid_update">User ID:</label>
                     <input type="text" id="userid_update" name="userid_update" required><br>
                     </br>
@@ -163,19 +158,15 @@ require 'header.php';
             <label for="name">Organization Name:</label>
             <input type="text" id="name" name="name" required><br>
             <br>
-
             <label for="phone">Phone Number:</label>
             <input type="text" id="phone" name="phone" required><br>
             <br>
-
             <label for="email">POC Email:</label>
             <input type="email" id="email" name="email" required><br>
             <br>
-
             <label for="password">Create Password:</label>
             <input type="password" id="password" name="password" required><br>
             <br>
-
             <!-- Area of Concern Dropdown Menu-->
             <label for="area_of_concern">Area of Concern:</label>
             <select id="area_of_concern" name="area_of_concern" required>
@@ -193,7 +184,7 @@ require 'header.php';
                 <option value="Supply Chain Security">Supply Chain Security</option>
                 <option value="Incident Response and Recovery">Incident Response and Recovery</option>
             </select><br>
-
+            
             <!-- Submit Button -->
             <br>
             <input type="submit" value="Create Your Account">
@@ -206,19 +197,15 @@ require 'header.php';
             <p> Toggle Volunteer Admin privilages here.</p>
             
             <?php
-
                 //SQL query to select all columns from the "volunteer" table.
                 $sql = "SELECT * FROM volunteer;";
                 
                 //Execute the query and store the result.
                 $result = mysqli_query($conn, $sql);
-
                 //Check if there are any rows returned by the query.
                 $resultCheck = mysqli_num_rows($result);
-
                 //If there are rows in the result.
                 if ($resultCheck > 0) { ?>
-
                 <form action="./admin.php" method="post">
                 <table style="width:100%; border: 1px solid #fff;">
                     <input type="hidden" id="type" name="type" value="volunteer">
@@ -256,12 +243,12 @@ require 'header.php';
                             }
                         }?>
                 </table>
-                
+
                 <!-- Submit Button -->
                 <input type="submit" value="Update Account">
                 </form>
         </section>
-
+        
         <!-- Delete Volunteer account Section -->
         <section>
             <h2>Delete Volunteer Account</h2>
@@ -304,27 +291,22 @@ require 'header.php';
             <label for="name">Full Name:</label>
             <input type="text" id="name" name="name" required><br>
             <br>
-
             <label for="phone">Phone Number:</label>
             <input type="text" id="phone" name="phone" required><br>
             <br>
-
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" required><br>
             <br>
-
             <label for="password">Create Password:</label>
             <input type="password" id="password" name="password" required><br>
             <br>
-
             <label for="hours">Hours available per week:</label>
             <input type="text" id="hours" name="hours" required><br>
             <br>
-
             <label for="linkedin">Linkedin profile URL:</label>
             <input type="text" id="linkedin" name="linkedin" required><br>
             <br>
-
+            
             <!-- Area of Expertise Dropdown Menu-->
             <label for="area_of_concern">Area of Expertise:</label>
             <select id="area_of_concern" name="area_of_concern" required>
@@ -343,7 +325,7 @@ require 'header.php';
                 <option value="Incident Response and Recovery">Incident Response and Recovery</option>
             </select><br>
             <br>
-
+            
             <!-- Criminal Background Check Dropdown Menu-->
             <label for="criminal_background_check">Have you completed a criminal background check?:</label>
             <select id="criminal_background_check" name="criminal_background_check" required>
@@ -354,29 +336,48 @@ require 'header.php';
                 <option value="No">No</option>
             </select><br>
             <br>
-
+            
             <!-- Submit Button -->
             <input type="submit" value="Create your account">
         </form>
     </section>
-
-
     </div>
 
-<!-- End of Body Section -->
+    <!-- End of Body Section -->
 </body>
-
 </html>
 
 <!-- PHP Section for handling form submission -->
 <?php
-
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    
+    //Update NGO account form
+    if ($_POST['type'] == 'update_ngo') {
+        // Extract user ID and password to update from the form input
+        $userid_update = mysqli_real_escape_string($conn, $_POST["userid_update"]);
+        $new_password = mysqli_real_escape_string($conn, $_POST['password_update']);
 
+        // SQL query to update password from NGO table where user ID matches
+        $sql_update = "UPDATE ngo SET password = ? WHERE idnumber = ?";
+        $stmt_update = mysqli_stmt_init($conn);
+
+        // Initialize prepared statement
+        if (!mysqli_stmt_prepare($stmt_update, $sql_update)) {
+            echo "SQL Error: " . mysqli_stmt_error($stmt_update);
+        } else {
+            //Hash password to scramble when viewed in database
+            $hashedPwd = password_hash($new_password, PASSWORD_DEFAULT);
+
+            // Bind parameters and excute the update query
+            mysqli_stmt_bind_param($stmt_update, "ss", $hashedPwd, $userid_update);
+            mysqli_stmt_execute($stmt_update);
+            echo "Account password updated successfully.";
+        }
+    }
+    
     // Delete NGO account form 
     if ($_POST["type"] === "delete_ngo") {
-
         // Extract user ID to delete from the form input
         $userid_delete = mysqli_real_escape_string($conn, $_POST["userid_delete"]);
         
@@ -397,7 +398,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     // Delete Volunteer account form 
     if ($_POST["type"] === "delete_volunteer") {
-
         // Extract user ID to delete from the form input
         $userid_delete = mysqli_real_escape_string($conn, $_POST["userid_delete"]);
         
@@ -415,10 +415,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo "Account deleted successfully.";
         }
     }
-
+    
     // Create NGO account form
     If ($_POST["type"] === "create_ngo") {
-
         // Get the form data and make sure to prevent SQL Injection by using 'msqli real escape string'
         $name = mysqli_real_escape_string($conn, $_POST['name']);
         $phone = mysqli_real_escape_string($conn, $_POST['phone']);
@@ -426,21 +425,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $password = mysqli_real_escape_string($conn, $_POST['password']);
         $area_of_concern = mysqli_real_escape_string($conn, $_POST['area_of_concern']);
     
-
         // Prepare SQL statement to insert data into the NGO database
         $sql = "INSERT INTO ngo (organization, phone, email, password, concern) 
                 VALUES (?, ?, ?, ?, ?);";
-
         $stmt = mysqli_stmt_init($conn);
     
         // Check for errors
         if (!mysqli_stmt_prepare($stmt, $sql)) {
             echo "SQL Error";
             } else {
-
             //Hash password to scramble when viewed in database
             $hashedPwd = password_hash($password, PASSWORD_DEFAULT);
-
             //Bind the parameters of the prepared statement
             mysqli_stmt_bind_param($stmt, "sssss", $name, $phone, $email, $hashedPwd, $area_of_concern);
         
@@ -464,21 +459,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $linkedin_url = mysqli_real_escape_string($conn, $_POST['linkedin']);
         $area_of_expertise = mysqli_real_escape_string($conn, $_POST['area_of_concern']);
         $criminal_background_check = mysqli_real_escape_string($conn, $_POST['criminal_background_check']);
-
         // Prepare SQL statement to insert data into the Volunteer database
         $sql = "INSERT INTO volunteer (name, phone, email, password, hours, linkedin, expertise, bgcheck) 
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
-
         $stmt = mysqli_stmt_init($conn);
     
         // Check for errors
         if (!mysqli_stmt_prepare($stmt, $sql)) {
             echo "SQL Error";
         } else {
-
             //Hash password to scramble when viewed in database
             $hashedPwd = password_hash($password, PASSWORD_DEFAULT);
-
             //Bind the parameters of the prepared statement
             mysqli_stmt_bind_param($stmt, "ssssssss", $full_name, $phone, $email, $hashedPwd, $hours_per_week, $linkedin_url, $area_of_expertise, $criminal_background_check);
             
@@ -496,18 +487,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             //Extract the user ID from the input name
             $userid = substr($key, 7); 
             $isCurrentUser = $_SESSION['type'] === $_POST["type"] && $_SESSION['user_id'] == $userid;
-
             //Skip updating the current user's own admin status.
             if($isCurrentUser) {     
                 continue;
             }
-
             //Check if the key contains 'input__', indicating it as a radio button input.
             if(str_contains($key, 'input__')) {
                 
                 //Sanitize the input.
                 $type = mysqli_real_escape_string($conn, $_POST["type"] ); 
-
                 //Prepare the SQL query based on the user type.
                 if($type == "volunteer") {
                     $sql = "UPDATE volunteer SET `admin`= ? WHERE `idnumber` = ?";
@@ -517,7 +505,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     echo "SQL Error";
                 }
                 
-
                 //Initialize and prepare the statement.
                 $stmt = mysqli_stmt_init($conn);
                 if (!mysqli_stmt_prepare($stmt, $sql)) {
