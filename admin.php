@@ -53,13 +53,13 @@ require 'header.php';
         <section>
             <!-- Title -->
             <h1>Welcome to the Admin page.</h1>
-            <p>As an admin you have the ability to let other users become admins as well by using the yes or no buttons in the list below. </p>
-            <p>Delete User accounts by entering the user ID in the form below.</p>
+            <p>Modify Admin status, Delete or Create User accounts by using the appropriate forms below.</p>
         </section>
 
         <!-- NGO Admin Table -->
         <section>
                 <h2>Administer NGO Permissions</h2>
+                <p> Toggle NGO Admin privilages here.</p>
             <?php
                 //SQL query to select all columns from the "ngo" table.
                 $sql2 = "SELECT * FROM ngo;";
@@ -83,6 +83,7 @@ require 'header.php';
                         <td><strong>User ID</strong></td>
                         <td><strong>Name</strong></td>
                         <td><strong>Email</strong></td>
+                        <td><strong>Password</strong></td>
                         <td><strong>Admin</strong></td>
                     </tr>
 
@@ -107,6 +108,7 @@ require 'header.php';
                                     "<td >" . $row['idnumber'] . "</td>" .
                                     "<td >" . $row['organization'] . "</td>" .
                                     "<td>" . $row['email'] . "</td>" .
+                                    "<td>" . $row['password'] . "</td>" .
                                     "<td>" . $isAdmin. "</td>" .
                                     "</tr>";
                             }
@@ -118,7 +120,7 @@ require 'header.php';
 
         <!-- Delete NGO account Section -->
         <section>
-            <h2>Delete NGO Accounts</h2>
+            <h2>Delete NGO Account</h2>
             <p>Enter the User ID of the NGO account to be deleted. This cannot be undone.</p>
                 <form action="./admin.php" method="post">
                     <input type="hidden" name="type" value="delete_ngo">
@@ -130,7 +132,8 @@ require 'header.php';
 
         <!-- NGO Account Creation Form -->    
     <section>
-        <h1>New NGO Registration Form</h1>
+        <h1>Create NGO Account</h1>
+        <p>Use this form to create a new NGO account.</p>
         <form action="./admin.php" method="post">
             <input type="hidden" name="type" value="create_ngo">
             <label for="name">Organization Name:</label>
@@ -176,6 +179,7 @@ require 'header.php';
         <!-- Volunteer Admin Table -->
         <section>
             <h2>Administer Volunteer Permissions</h2>
+            <p> Toggle Volunteer Admin privilages here.</p>
             
             <?php
 
@@ -200,6 +204,7 @@ require 'header.php';
                         <td>User ID</td>
                         <td>Name</td>
                         <td>Email</td>
+                        <td>Password</td>
                         <td>Admin</td>
                     </tr>
                         
@@ -221,6 +226,7 @@ require 'header.php';
                                     "<td>" . $row['idnumber'] . "</td>" .
                                     "<td>" . $row['name'] . "</td>" .
                                     "<td>" . $row['email'] . "</td>" .
+                                    "<td>" . $row['password'] . "</td>" .
                                     "<td>" . $isAdmin . "</td>" .
                                     "</tr>";
                             }
@@ -232,7 +238,7 @@ require 'header.php';
 
         <!-- Delete Volunteer account Section -->
         <section>
-            <h2>Delete Volunteer Accounts</h2>
+            <h2>Delete Volunteer Account</h2>
             <p>Enter the User ID of the Volunteer account to be deleted. This cannot be undone.</p>
                 <form action="./admin.php" method="post">
                     <input type="hidden" name="type" value="delete_volunteer">
@@ -244,7 +250,8 @@ require 'header.php';
 
     <!-- New Volunteer Registration Form -->    
     <section>
-        <h1>Volunteer Registration Form</h1>
+        <h1>Create Volunteer Account</h1>
+        <p>Use this form to create a new Volunteer account.</p>
         <form action="./admin.php" method="post">
             <input type="hidden" name="type" value="create_volunteer">
             <label for="name">Full Name:</label>
