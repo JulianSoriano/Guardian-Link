@@ -11,7 +11,7 @@ NGO Registration (Email, Organization name, Area of Concern)
 Volunteer Registration (Name, Email, # of Hours worked, Background Check, Linkedin Page)
 3 User Types (NGO, Volunteer, Admin)
 Access Control (Users log in to view opposite user type profiles, and cannot see users of same type)
-Admin Privileges (Admin ability to create and delete users, assign admin roles, reset passwords)
+Admin Privileges (Admin ability to create and delete users, assign admin roles, reset passwords. Reg users can delete own accounts.)
 
 NOT COMPLETED
 
@@ -20,9 +20,6 @@ Communication
 
 Forgot Password
     Function for users to reset passwords
-
-Admin Privileges
-    Regular users have the ability to delete their own accounts.
 
 Submission Checklist
 
