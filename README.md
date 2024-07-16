@@ -2,6 +2,9 @@
 
 Julian's Guardian Link Assignment
 
+GitHub Link: https://github.com/JulianSoriano/Guardian-Link
+Video Link: https://drive.google.com/file/d/1rI2GSNbfxuPYUdVNmm_LR3wWr1Ae40Yq/view?usp=drive_link
+
 ---
 
 COMPLETED Functions
